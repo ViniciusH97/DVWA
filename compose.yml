@@ -9,21 +9,22 @@ networks:
 services:
   dvwa:
     build: .
-    image: ghcr.io/digininja/dvwa:latest
+    image: vulnerables/dvwa:latest
     # Change `always` to `build` to build from local source
+    container_name: dvwa
     pull_policy: always
     environment:
       - DB_SERVER=db
     depends_on:
       - db
     # Uncomment the next 2 lines to serve local source
-    # volumes:
-    #   - ./:/var/www/html
+    volumes:
+      - ./:/var/www/html
     networks:
       - dvwa
     ports:
-      - 127.0.0.1:4280:80
-    restart: unless-stopped
+      - "8081:80"
+    restart: always
 
   db:
     image: docker.io/library/mariadb:10
